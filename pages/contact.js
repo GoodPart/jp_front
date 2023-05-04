@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from 'axios';
 
+import { useRouter } from "next/router";
+
 export default function Contact() {
+    const router = useRouter()
 
     const [Name, setName] = useState('');
     const [Email, setEmail] = useState('');
@@ -33,13 +36,20 @@ export default function Contact() {
             yoursubject: Subject,
             yourmessage: Message
         }
-        axios.post('https://jp-front.vercel.app/api/mailer', { form }).then((response) => {
-            console.log(response.data);
+        const post_mail = axios.post('http://localhost:3000/api/mailer', { form });
+        // const post_mail = axios.post('https://jp-front.vercel.app/api/mailer', { form });
+        post_mail.then((res) => {
+            console.log("요기", res)
+            if (res.data.status) {
+                setName("")
+                setEmail("")
+                setSubject("")
+                setMessage("")
+                alert(res.data.message)
+                router.reload()
+            }
+
         })
-    }
-
-    const _form = {
-
     }
     // const result = axios.post("http://localhost:3000/api/mailer");
 

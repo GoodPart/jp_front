@@ -1,10 +1,10 @@
 import nodeMailer from 'nodemailer'
 
-export default function mailer(req, res) {
+export default async function mailer(req, res) {
     if (req.method === 'POST') {
         console.log("POST", req.body.form)
 
-        const transporter = nodeMailer.createTransport({
+        const transporter = await nodeMailer.createTransport({
             service: 'gmail',
             host: 'smtp.gmail.com', // gmail server
             port: 587,
@@ -26,9 +26,19 @@ export default function mailer(req, res) {
             Message: ${req.body.form.yourmessage}
         `,
         };
-        transporter.sendMail(mailOption)
 
+        try {
+            await transporter.sendMail(mailOption);
+            return res.status(200).json({
+                message: "post mail Success!",
+                status: true
+            })
+        } catch (err) {
+            return "false"
+        }
     } else {
         console.log("GET ")
     }
+
+
 }
