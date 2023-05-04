@@ -27,17 +27,21 @@ export default function Contact() {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:9999/mail', {
-            data: {
-                yourname: Name,
-                youremail: Email,
-                yoursubject: Subject,
-                yourmessage: Message
-            }
-        }).then((response) => {
+        let form = {
+            yourname: Name,
+            youremail: Email,
+            yoursubject: Subject,
+            yourmessage: Message
+        }
+        axios.post('http://localhost:3000/api/mailer', { form }).then((response) => {
             console.log(response.data);
         })
     }
+
+    const _form = {
+
+    }
+    // const result = axios.post("http://localhost:3000/api/mailer");
 
     return (
         <form onSubmit={submitHandler}>
@@ -85,3 +89,11 @@ export default function Contact() {
         </form>
     )
 }
+
+// export async function getServerSideProps({ }) {
+//     const _form = {
+
+//     }
+//     const result = await axios.post("http://localhost:3000/api/mailer");
+//     console.log(result)
+// }
