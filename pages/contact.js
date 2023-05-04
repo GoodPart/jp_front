@@ -33,7 +33,7 @@ export default function Contact() {
             yoursubject: Subject,
             yourmessage: Message
         }
-        axios.post('http://localhost:3000/api/mailer', { form }).then((response) => {
+        axios.post('https://jp-front.vercel.app/api/mailer', { form }).then((response) => {
             console.log(response.data);
         })
     }
